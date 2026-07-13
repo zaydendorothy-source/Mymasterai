@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>MyAI Assistant</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+
+<body>
+
+<div class="sidebar">
+
+    <h2>🤖 MyAI</h2>
+
+    <button type="button">➕ New Chat</button>
+    <button type="button">🧠 Memory</button>
+    <button type="button">💾 Saved Chats</button>
+    <button type="button">⚙️ Settings</button>
+
+    <br>
+
+    <form method="POST" action="/clear">
+        <button type="submit">
+            🗑️ Clear Chat
+        </button>
+    </form>
+
+</div>
+
+
+<div class="main">
+
+    <h1>MyAI Assistant</h1>
+
+
+    <div class="chat">
+
+        {% for message in history %}
+
+            {% if message["role"] == "user" %}
+
+                <div class="user">
+                    <b>You:</b> {{ message["text"] }}
+                </div>
+
+            {% else %}
+
+                <div class="ai">
+
+                    <b>AI:</b>
+                    <span class="aiText">{{ message["text"] }}</span>
+
+                    <br><br>
+
+                    <button type="button" onclick="speakAI(this)">
+                        🔊 Talk
+                    </button>
+
+                </div>
+
+            {% endif %}
+
+        {% endfor %}
+
+    </div>
+
+
+    <form method="POST" action="/">
+
+        <input
+            type="text"
+            name="message"
+            placeholder="Ask your AI..."
+            autocomplete="off"
+            required
+        >
+
+        <button type="submit">
+            Send
+        </button>
+
+    </form>
+
+
+</div>
+
+
+<script>
+
+function speakAI(button) {
+
+    let text = button.parentElement.querySelector(".aiText").innerText;
+
+    let speech = new SpeechSynthesisUtterance(text);
+
+    speech.rate = 1;
+    speech.pitch = 1;
+
+    window.speechSynthesis.speak(speech);
+
+}
+
+</script>
+
+
+</body>
+
+</html>

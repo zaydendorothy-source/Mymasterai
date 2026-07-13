@@ -1,0 +1,108 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #111;
+    color: white;
+    display: flex;
+    height: 100vh;
+}
+
+
+.sidebar {
+    width: 250px;
+    background: #1b1b1b;
+    padding: 20px;
+    box-sizing: border-box;
+    height: 100vh;
+}
+
+
+.sidebar h2 {
+    text-align: center;
+}
+
+
+.sidebar button {
+    width: 100%;
+    margin: 10px 0;
+    padding: 12px;
+    background: #333;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+
+.sidebar button:hover {
+    background: #444;
+}
+
+
+.main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    height: 100vh;
+    box-sizing: border-box;
+}
+
+
+h1 {
+    text-align: center;
+}
+
+
+.chat {
+    flex: 1;
+    overflow-y: auto;
+    background: #181818;
+    padding: 20px;
+    border-radius: 15px;
+}
+
+
+.user, .ai {
+    padding: 15px;
+    margin: 10px;
+    border-radius: 15px;
+    max-width: 80%;
+    white-space: pre-wrap;
+}
+
+
+.user {
+    background: #333;
+    margin-left: auto;
+}
+
+
+.ai {
+    background: #222;
+    margin-right: auto;
+}
+
+
+form {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+
+input {
+    flex: 1;
+    padding: 15px;
+    border-radius: 10px;
+    border: none;
+    font-size: 16px;
+}
+
+
+form button {
+    padding: 15px 25px;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+}
