@@ -12,7 +12,12 @@
 
     <h2>🤖 MyAI</h2>
 
-    <button type="button">➕ New Chat</button>
+    <form method="POST" action="/new_chat">
+        <button type="submit">
+            ➕ New Chat
+        </button>
+    </form>
+
     <button type="button">🧠 Memory</button>
     <button type="button">💾 Saved Chats</button>
     <button type="button">⚙️ Settings</button>
@@ -65,7 +70,16 @@
     </div>
 
 
-    <form method="POST" action="/">
+    <form method="POST" action="/" enctype="multipart/form-data">
+
+        <input
+            type="file"
+            name="image"
+            accept="image/*"
+            capture="environment"
+        >
+
+        <br><br>
 
         <input
             type="text"
