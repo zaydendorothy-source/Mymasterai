@@ -1,4 +1,5 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect
+from werkzeug.utils import secure_filename
 import json
 import os
 
@@ -15,8 +16,10 @@ memory = Memory()
 web = WebSearch()
 reader = FileReader()
 
-
 CHAT_FILE = "chat_history.json"
+UPLOAD_FOLDER = "uploads"
+
+os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
 
 def load_chat():
@@ -43,32 +46,51 @@ def home():
     if request.method == "POST":
 
         message = request.form.get("message", "")
+        deep = request.form.get("deep") == "on"
+
+        image = request.files.get("image")
+
+        if image and image.filename != "":
+            filename = secure_filename(image.filename)
+            image_path = os.path.join(UPLOAD_FOLDER, filename)
+            image.save(image_path)
+
+            message += f"\n\n[User uploaded image: {filename}]"
 
         chat_history.append({
             "role": "user",
             "text": message
         })
 
-
         answer = ai.ask(
             message,
-            memory.list()
+            memory.list(),
+            deep
         )
-
 
         chat_history.append({
             "role": "ai",
             "text": answer
         })
 
-
         save_chat(chat_history)
-
 
     return render_template(
         "index.html",
         history=chat_history
     )
+
+
+@app.route("/new_chat", methods=["POST"])
+def new_chat():
+
+    global chat_history
+
+    chat_history = []
+
+    save_chat(chat_history)
+
+    return redirect("/")
 
 
 @app.route("/clear", methods=["POST"])
@@ -80,10 +102,7 @@ def clear_chat():
 
     save_chat(chat_history)
 
-    return render_template(
-        "index.html",
-        history=chat_history
-    )
+    return redirect("/")
 
 
 if __name__ == "__main__":
